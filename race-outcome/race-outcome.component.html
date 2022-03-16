@@ -1,0 +1,4 @@
+<div>
+	<button type='button' (click)='start_next_leg()'>{{legText ? 'Next Round' : 'Start Race'}}</button>
+	<div *ngIf='legText' [innerText]='legText'></div>
+</div>

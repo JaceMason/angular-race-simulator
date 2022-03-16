@@ -1,0 +1,6 @@
+<div *ngFor='let racer of racersService.racers'>
+	<input [(ngModel)]= 'racer.name' placeholder='blah'>
+	<input [(ngModel)]= 'racer.modifier' size='1' maxlength="1">
+	{{racer.disqualified}}
+</div>
+<button type='button' (click)='add_racer("NewRacer", 0)'>Add</button>
