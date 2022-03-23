@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RacersService } from '../racers.service';
+import { Racer } from '../racer';
 
 @Component({
 	selector: 'app-race-outcome',
@@ -14,6 +15,7 @@ export class RaceOutcomeComponent implements OnInit {
 	currentLeg = 0;
 	lastLeg = 5;
 	legText?: string; //Each leg of the race will overwrite this.
+	orderedRacers: Racer[] = [];
 	
 	ngOnInit(): void {
 	}
@@ -23,7 +25,8 @@ export class RaceOutcomeComponent implements OnInit {
 			//Quick safety net just to make sure it does not behave weirdly
 			return;
 		}
-		this.legText = '';
+		this.legText = ''; //reset our leg text
+		
 		if(this.currentLeg == 0){
 			this.legText = this.create_starting_text();
 		}
@@ -31,8 +34,13 @@ export class RaceOutcomeComponent implements OnInit {
 			if(this.currentLeg == 1){
 				this.legText = 'And they\'re off!\n';
 			}
-			//Run the race and display the leg results
+			//Run the race
 			this.racersService.run_race_leg();
+			
+			//pull out racers and order for position reading
+			this.orderedRacers = this.racersService.racers.slice();
+			this.orderedRacers.sort(function(a, b){return b.score-a.score})
+			
 			this.legText += this.create_leg_text();
 
 			//If we hit the end, display the race results
@@ -40,8 +48,6 @@ export class RaceOutcomeComponent implements OnInit {
 				
 				this.legText += this.create_result_text();
 			}
-
-			
 		}
 		this.currentLeg++;
 	}
@@ -58,7 +64,7 @@ export class RaceOutcomeComponent implements OnInit {
 
 	create_leg_text(): string{
 		let legText = '';
-		for(const racer of this.racersService.racers){
+		for(const racer of this.orderedRacers){
 			legText += `${racer.name}\n`;
 			if(racer.lastRoll == 20){
 				legText += `Wow just look at fighting spirit from ${racer.name}! They've burst ahead!\n`;
@@ -73,14 +79,43 @@ export class RaceOutcomeComponent implements OnInit {
 	}
 
 	create_result_text(): string{
-		//TODO: check for ties later when the array gets sorted.
-		let highest = this.racersService.racers[0];
-		for(const racer of this.racersService.racers){
-			if(racer.score > highest.score){
-				highest = racer;
-			}
+		let winString = "";
+		let win = 0;
+		let nwin = 1
+		//Look for ties (check array bounds and then if score is equal)
+		while(nwin < this.orderedRacers.length && this.orderedRacers[nwin].score == this.orderedRacers[win].score){
+			win++;
+			nwin = win+1
 		}
-		return(`${highest.name} is the winner!`);
+		//There was a tie
+		if(win > 0){
+			winString += "Wow! A tie!\n";
+			
+			for(let i = 0; i <= win; i++){
+				if(i > 0){
+					if(win > 1){
+						if(i == win){
+							winString += ", and ";
+						}
+						else{
+							winString += ", "
+						}
+					}
+					else{
+						winString += " and ";
+					}
+				}
+				
+				winString += this.orderedRacers[i].name;
+			}
+
+			winString += " have crossed the finish line at exactly the same time!"
+		}
+		else{
+			winString = `${this.orderedRacers[win].name} is the winner!`;
+		}
+		return winString;
 	}
+
 	//Quick programming note, folks. We have some disqualified racers. ____, ____, and ____ will not be participating.
 }

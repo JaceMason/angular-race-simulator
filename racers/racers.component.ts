@@ -20,15 +20,8 @@ export class RacersComponent implements OnInit {
 	
 	add_racer(racerName: string, mod: number): boolean {
 		return this.racersService.add_racer(racerName, mod);
-		
 	}
 	dq_racer(racer: Racer) {
 		racer.disqualified = true;
 	}
-	
-
 }
-/*
-Tip: Remember, the more legs of the race there are, the more likely it will be that racers with higher modifiers win.
-Tip: Modifiers can be changed between race legs just in case the players... 'help' out a racer.
-*/
