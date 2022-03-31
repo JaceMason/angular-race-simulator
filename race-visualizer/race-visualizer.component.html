@@ -7,27 +7,12 @@
 	</div>
 	<div id="RaceBox" style="width:{{trackWidth}}px;">
 		<div *ngFor='let racer of racersService.racers' class="BoxRow TrackRow" style="color:{{racer.color}};">  
-			<div *ngIf="currentLeg > 0; then thenBlock else elseBlock"></div>
-
-			<ng-template #thenBlock>
-				<div *ngIf="orderedRacers[0].score == 0; else elseBlock">
-					<div style="width: {{trackWidth*(currentLeg/lastLeg)}}px"></div>
-				</div>
-				<ng-template #elseBlock>
-  					<div style="width: {{(racer.score/orderedRacers[0].score)*trackWidth*(currentLeg/lastLeg)}}px"></div>
-				</ng-template>
-				<div>O</div>
-			</ng-template>
-
-			<ng-template #elseBlock>
-				<div *ngIf="racer.disqualified; else elseBlock">  
-					<div style="">X</div>
-				</div>
-				<ng-template #elseBlock>
-					<div>O</div>
-				</ng-template>
-			</ng-template>
-
+			<div style="width: {{calculate_width(racer)}}px"></div>
+			<div>
+				<div *ngIf="racer.disqualified; then thenBlock else elseBlock"></div>
+					<ng-template #thenBlock>X</ng-template>
+					<ng-template #elseBlock>O</ng-template>
+			</div>
 		</div>
 	</div>
 </div>

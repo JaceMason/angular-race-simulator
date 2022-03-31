@@ -15,6 +15,16 @@ export class RaceVisualizerComponent implements OnInit {
 	
 	trackWidth = 1000;
 	constructor(public racersService: RacersService) { }
+
+	calculate_width(racer: Racer):Number{
+		//Avoid divisions by 0 and undefined orderedRacers before race start
+		if(!this.orderedRacers[0] || this.orderedRacers[0].score == 0 || this.lastLeg == 0){
+			return 0;
+		}
+		else{
+			return (racer.score/this.orderedRacers[0].score)*this.trackWidth*(this.currentLeg/this.lastLeg);
+		}
+	}
 	
 	ngOnInit(): void {
 	}
