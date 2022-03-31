@@ -39,7 +39,7 @@ export class RaceOutcomeComponent implements OnInit {
 			
 			//pull out racers and order for position reading
 			this.orderedRacers = this.racersService.racers.slice();
-			this.orderedRacers.sort(function(a, b){return b.score-a.score})
+			this.orderedRacers.sort(function(a, b){return b.score-a.score;});
 			
 			this.legText += this.create_leg_text();
 
@@ -79,37 +79,37 @@ export class RaceOutcomeComponent implements OnInit {
 	}
 
 	create_result_text(): string{
-		let winString = "";
+		let winString = '';
 		let win = 0;
-		let nwin = 1
+		let nwin = 1;
 		//Look for ties (check array bounds and then if score is equal)
 		while(nwin < this.orderedRacers.length && this.orderedRacers[nwin].score == this.orderedRacers[win].score){
 			win++;
-			nwin = win+1
+			nwin = win+1;
 		}
 		//There was a tie
 		if(win > 0){
-			winString += "Wow! A tie!\n";
+			winString += 'Wow! A tie!\n';
 			
 			for(let i = 0; i <= win; i++){
 				if(i > 0){
 					if(win > 1){
 						if(i == win){
-							winString += ", and ";
+							winString += ', and ';
 						}
 						else{
-							winString += ", "
+							winString += ', ';
 						}
 					}
 					else{
-						winString += " and ";
+						winString += ' and ';
 					}
 				}
 				
 				winString += this.orderedRacers[i].name;
 			}
 
-			winString += " have crossed the finish line at exactly the same time!"
+			winString += ' have crossed the finish line at exactly the same time!';
 		}
 		else{
 			winString = `${this.orderedRacers[win].name} is the winner!`;

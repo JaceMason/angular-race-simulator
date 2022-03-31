@@ -1,4 +1,7 @@
+<app-race-visualizer [orderedRacers]="orderedRacers" [currentLeg]="currentLeg-1" [lastLeg]="lastLeg"></app-race-visualizer>
+<br>
 <div>
 	<button type='button' (click)='start_next_leg()'>{{legText ? 'Next Round' : 'Start Race'}}</button>
+	<div>Announcer Text:</div>
 	<div *ngIf='legText' [innerText]='legText'></div>
 </div>

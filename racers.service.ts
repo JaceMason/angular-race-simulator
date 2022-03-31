@@ -7,11 +7,20 @@ import { Racer } from './racer';
 export class RacersService {
 	racers:Racer[] = [];
 	constructor() {}
-		
+	
 	roll_d20(): number { //generate number between 1 and 20
 		return(Math.floor(Math.random() * 20) + 1);
 	}
-
+	
+	random_color(): string {
+		let color = '#';
+		const red = Math.floor(Math.random()*0xFF).toString(16);
+		const green = Math.floor(Math.random()*0xFF).toString(16);
+		const blue = Math.floor(Math.random()*0xFF).toString(16);
+		color += red+green+blue;
+		return color;
+	}
+	
 	run_race_leg():void{
 		for(const racer of this.racers){
 			const roll = this.roll_d20();	
@@ -28,7 +37,7 @@ export class RacersService {
 	
 	add_racer(racerName: string, mod: number): boolean {
 		if (this.racers.length < 10){
-			const racer: Racer = {name: racerName, modifier: mod, disqualified: false, score: 0, lastRoll: 0};
+			const racer: Racer = {id: this.racers.length, name: racerName, modifier: mod, disqualified: false, score: 0, lastRoll: 0, color: this.random_color()};
 			this.racers.push(racer);
 			return true;
 		}

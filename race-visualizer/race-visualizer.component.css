@@ -1,0 +1,16 @@
+#NameBox {
+	padding: 5px;
+}
+#RaceBox {
+	border: 1px solid;
+	margin-left: 10px;
+	padding: 5px;
+}
+
+.BoxRow {
+}
+
+.TrackRow {
+	border-bottom: 1px dotted;
+	display: flex;
+}
