@@ -1,16 +1,27 @@
 #NameBox {
 	padding: 5px;
 }
+
 #RaceBox {
-	border: 1px solid;
+	outline: 1px solid black;
 	margin-left: 10px;
 	padding: 5px;
 }
 
 .BoxRow {
+	margin-top: 5px;
+	height: 25px;
 }
 
 .TrackRow {
-	border-bottom: 1px dotted;
+	box-shadow: inset 0 -2px 0;
 	display: flex;
+}
+
+.RacerIcon {
+	border: 2px solid;
+	border-color: black;
+	background-color: currentcolor;
+	width: 15px;
+	height: 15px;
 }

@@ -14,10 +14,11 @@ export class RacersService {
 	
 	random_color(): string {
 		let color = '#';
-		const red = Math.floor(Math.random()*0xFF).toString(16);
-		const green = Math.floor(Math.random()*0xFF).toString(16);
-		const blue = Math.floor(Math.random()*0xFF).toString(16);
+		const red = Math.floor(Math.random()*0xFF).toString(16).padStart(2, '0');
+		const green = Math.floor(Math.random()*0xFF).toString(16).padStart(2, '0');
+		const blue = Math.floor(Math.random()*0xFF).toString(16).padStart(2, '0');
 		color += red+green+blue;
+		console.log(red, green, blue)
 		return color;
 	}
 	
